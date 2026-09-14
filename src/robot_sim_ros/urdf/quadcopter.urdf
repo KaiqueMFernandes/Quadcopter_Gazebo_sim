@@ -1,0 +1,255 @@
+<?xml version="1.0"?>
+   <robot name="quadcopter">
+
+    <link name="base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.2 0.04"/>
+        </geometry>
+        <material name="dark_gray">
+          <color rgba="0.3 0.3 0.3 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.2 0.04"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.300"/>
+        <inertia ixx="0.001040" ixy="0.0" ixz="0.0"
+                                 iyy="0.004040" iyz="0.0"
+                                                izz="0.005000"/>
+      </inertial>
+    </link>
+
+    <!-- Front-Left rotor -->
+    <link name="rotor_FL">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1.0 0.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.200"/>
+        <inertia ixx="0.000860" ixy="0.0" ixz="0.0"
+                                 iyy="0.000860" iyz="0.0"
+                                                izz="0.001690"/>
+      </inertial>
+    </link>
+
+    <!-- Front-Right rotor -->
+    <link name="rotor_FR">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+        <material name="red"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.200"/>
+        <inertia ixx="0.000860" ixy="0.0" ixz="0.0"
+                                 iyy="0.000860" iyz="0.0"
+                                                izz="0.001690"/>
+      </inertial>
+    </link>
+
+    <!-- Back-Left rotor -->
+    <link name="rotor_BL">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+        <material name="light_gray"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.200"/>
+        <inertia ixx="0.000860" ixy="0.0" ixz="0.0"
+                                 iyy="0.000860" iyz="0.0"
+                                                izz="0.001690"/>
+      </inertial>
+    </link>
+
+    <!-- Back-Right rotor -->
+    <link name="rotor_BR">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+        <material name="light_gray"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.03" radius="0.13"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.200"/>
+        <inertia ixx="0.000860" ixy="0.0" ixz="0.0"
+                                 iyy="0.000860" iyz="0.0"
+                                                izz="0.001690"/>
+      </inertial>
+    </link>
+	 
+    <joint name="base_to_rotor_FL" type="fixed">
+      <parent link="base_link"/>
+      <child link="rotor_FL"/>
+      <origin xyz="0.16 0.13 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_to_rotor_FR" type="fixed">
+      <parent link="base_link"/>
+      <child link="rotor_FR"/>
+      <origin xyz="0.16 -0.13 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_to_rotor_BL" type="fixed">
+      <parent link="base_link"/>
+      <child link="rotor_BL"/>
+      <origin xyz="-0.09 0.13 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_to_rotor_BR" type="fixed">
+      <parent link="base_link"/>
+      <child link="rotor_BR"/>
+      <origin xyz="-0.09 -0.13 0.0" rpy="0 0 0"/>
+    </joint>
+    <link name="camera_link">
+      <inertial>
+        <mass value="0.01"/>
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+      </inertial>
+    </link>
+
+    <joint name="camera_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="camera_link"/>
+      <origin xyz="0.1 0 -0.02" rpy="0 0.2 0"/>  <!-- slightly forward, tilted down -->
+    </joint>
+  <!-- ═══════════════════════════════════════════════════════════
+       GAZEBO TAGS
+       ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Gravity control (robot level, not inside <link>) -->
+  <gazebo reference="base_link">
+    <gravity>false</gravity>
+  </gazebo>
+
+  <!-- Gazebo materials -->
+  <gazebo reference="base_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="rotor_FL">
+    <visual>
+      <material>
+        <ambient>1.0 0.0 0.0 1.0</ambient>
+        <diffuse>1.0 0.0 0.0 1.0</diffuse>
+        <specular>0.5 0.5 0.5 1.0</specular>
+      </material>
+    </visual>
+  </gazebo>
+  <gazebo reference="rotor_FR">
+    <visual>
+      <material>
+        <ambient>1.0 0.0 0.0 1.0</ambient>
+        <diffuse>1.0 0.0 0.0 1.0</diffuse>
+        <specular>0.5 0.5 0.5 1.0</specular>
+      </material>
+    </visual>
+  </gazebo>
+  <gazebo reference="rotor_BL">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="rotor_BR">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GAZEBO PLUGINS
+       ═══════════════════════════════════════════════════════════ -->
+
+  <gazebo>
+    <!-- Pose publisher: broadcasts link poses into Gazebo topic system.
+         Used by ros_gz_bridge to feed RViz / ROS2 TF. -->
+    <plugin filename="gz-sim-pose-publisher-system"
+            name="gz::sim::systems::PosePublisher">
+      <publish_link_pose>true</publish_link_pose>
+      <use_pose_vector_msg>true</use_pose_vector_msg>
+      <static_publisher>true</static_publisher>
+      <static_update_frequency>100</static_update_frequency>
+    </plugin>
+
+    <!-- ─────────────────────────────────────────────────────────
+         ApplyLinkWrench service next step
+         ───────────────────────────────────────────────────────── -->
+    <!-- <plugin filename="gz-sim-apply-link-wrench-system"
+            name="gz::sim::systems::ApplyLinkWrench">
+    </plugin> -->
+
+    <!-- Joint state publisher (useful once you add spinning rotor joints) -->
+    <plugin filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher">
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="camera_link">
+    <sensor name="camera" type="camera">
+      <camera>
+        <horizontal_fov>1.047</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>100</far>
+        </clip>
+      </camera>
+      <always_on>true</always_on>
+      <update_rate>30</update_rate>
+      <visualize>false</visualize>
+      <topic>/drone/camera</topic>
+      </sensor>
+  </gazebo>
+  
+  <gazebo>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+  </gazebo>
+    
+   </robot>
